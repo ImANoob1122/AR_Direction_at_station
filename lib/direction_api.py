@@ -35,7 +35,26 @@ def get_directions(origin, destination):
         print(f"移動時間: {leg['duration']['text']}")
 
         for step in leg['steps']:
-            print(f"{step['html_instructions']} ({step['distance']['text']}, {step['duration']['text']})")
+            instructions = step['html_instructions']
+            distance = step['distance']['text']
+            duration = step['duration']['text']
+            travel_mode = step['travel_mode']
+
+            print(f"\n{instructions} ({distance}, {duration})")
+
+            if travel_mode == 'TRANSIT':
+                transit_details = step['transit_details']
+                line_name = transit_details['line']['name']
+                vehicle_type = transit_details['line']['vehicle']['type']
+                departure_stop = transit_details['departure_stop']['name']
+                arrival_stop = transit_details['arrival_stop']['name']
+                num_stops = transit_details['num_stops']
+
+                print(f"  - 電車名: {line_name}")
+                print(f"  - 乗り物タイプ: {vehicle_type}")
+                print(f"  - 出発駅: {departure_stop}")
+                print(f"  - 到着駅: {arrival_stop}")
+                print(f"  - 停車駅数: {num_stops}")
 
     else:
         print("ルートを取得できませんでした。")
